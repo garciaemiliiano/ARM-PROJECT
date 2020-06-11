@@ -31,7 +31,7 @@ Consideraciones generales
 
 
 LISTA DE FUNCIONALIDADES:
-    -Como hacer print y un input. ✔ 
-    -Como leer los datos de un input.
-    -Debe hacer operaciones aritmeticas
-    -Agregarle extras, mensaje de error y un "adios".
+    ●Como hacer print y un input. ✔ 
+    ●Como leer los datos de un input.
+    ●Debe hacer operaciones aritmeticas
+    ●Agregarle extras, mensaje de error y un "adios".
