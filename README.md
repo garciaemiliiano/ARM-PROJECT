@@ -17,7 +17,7 @@ La implementación debe contar con los siguientes puntos:
     ● Extender el procesamiento del bot para que reconozca la palabra adiós para cerrar el
     programa y despedirse.
 
-Consideraciones generales
+Consideraciones generales:
     ● Esquema general pseudocódigo: El esquema general del programa que se provee está inspirado en el ciclo de instrucción
     (Fetch-Decode-Execute) 
 
@@ -31,7 +31,7 @@ Consideraciones generales
 
 
 LISTA DE FUNCIONALIDADES:
-    ●Como hacer print y un input. ✔ 
-    ●Como leer los datos de un input.
-    ●Debe hacer operaciones aritmeticas
-    ●Agregarle extras, mensaje de error y un "adios".
+    ● Como hacer print y un input. ✔ 
+    ● Como leer los datos de un input.
+    ● Debe hacer operaciones aritmeticas
+    ● Agregarle extras, mensaje de error y un "adios".
