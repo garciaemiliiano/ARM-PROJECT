@@ -20,5 +20,5 @@ _escribir:
     swi 0
 
 fin: 
-    mov r7, #1
+    mov r7, #1 /*Lukitas */
     swi 0
