@@ -1,8 +1,8 @@
-# Trabajo Practico Final para Organizacion del Computador I.
+# Trabajo Practico Final para Organización del Computador I.
 
 ## Realizar un programa en assembler que implemente un bot, es decir, un programa que lee los mensajes tipeados por el usuario y devuelve una respuesta de acuerdo al mensaje del usuario.
 
-La implementación debe contar con los siguientes puntos:
+### La implementación debe contar con los siguientes puntos:
     
     ● El procesamiento del bot debe responder a consultas aritméticas, por ejemplo, sumar un
     par de números, o restarlos. Los mensajes deben restringirse al lenguaje aceptado por
@@ -16,7 +16,7 @@ La implementación debe contar con los siguientes puntos:
     ● Extender el procesamiento del bot para que reconozca la palabra adiós para cerrar el
     programa y despedirse.
 
-Consideraciones generales:
+### Consideraciones generales:
 
     ● El esquema general del programa que se provee está inspirado en el ciclo de instrucción
     (Fetch-Decode-Execute) 
@@ -28,9 +28,12 @@ Consideraciones generales:
     “Subrutinas y sección de datos”. El docente aceptará o sugerirá cambios para que empiece a
     programar.
 
+
+### Lista de funcionalidades a implementar/implementadas:
 ```
-Lista de funcionalidades a implementar/implementadas:
-    ● ASDASD.
-    ● asdasd.
+-Como hacer print y un input.✅
+-Como leer los datos de un input.❌
+-Debe hacer operaciones aritmeticas.❌
+-Agregarle extras, mensaje de error, adios.❌
 ```
     
