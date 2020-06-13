@@ -11,7 +11,7 @@ main:
     mov r2, #10
     ldr r1, =mensaje
     swi 0
-
+/*hola */
 _escribir:
     mov r7, #4
     mov r0, #1
