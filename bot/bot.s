@@ -3,6 +3,7 @@
 mensaje: .ascii ""
 .text 
 
+
 .global main
 
 main: 
@@ -17,7 +18,7 @@ _escribir:
     mov r0, #1
     mov r2, #6 /*Numero de letras */
     ldr r1, =mensaje
-    swi 0
+    swi 0 /*hola */
 
 fin: 
     mov r7, #1 /*AA */
