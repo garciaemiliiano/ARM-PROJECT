@@ -32,8 +32,10 @@
 ### Lista de funcionalidades a implementar/implementadas:
 ```
 -Como hacer print y un input.✅
--Como leer los datos de un input.❌
+-Como leer los datos de un input.✅
+-Mostrar numeros por pantalla.✅
 -Debe hacer operaciones aritmeticas.❌
+-Mostrar resultado de operacion por pantalla.❌
 -Agregarle extras, mensaje de error, adios.❌
 ```
     
