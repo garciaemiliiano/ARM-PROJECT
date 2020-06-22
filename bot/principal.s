@@ -1,6 +1,6 @@
 .data
-input_usuario: .asciz "25 / 05"            
-mensajeDeBienvenida: .asciz "Hola, ¿Como estas?, Ingrese una operacion"                                                                 
+input_usuario: .asciz "                           "            
+mensajeDeBienvenida: .asciz "Hola, ¿Como estas?, Ingrese una operacion: "                                                                 
 mensaje_error:  .asciz "Lo siento, mis respuestas son limitadas \n"
 text_result: .asciz ""
 posicion: .asciz "0"
@@ -17,8 +17,9 @@ mensaje_despedida: .asciz "Adios! \n"
 main:   push {r0,r1,r2,r4,r7}
         mov r7, #4      
         mov r0, #1      
-        mov r2, #92   
+        mov r2, #45 
         ldr r1, =mensajeDeBienvenida 
+		swi 0
         pop {r0,r1,r2,r4,r7}
         bal in_us
 
@@ -27,6 +28,7 @@ in_us:  push {r0,r2,r7}
         mov r0, #0
         mov r2, #10
         ldr r1, =input_usuario
+		swi 0
         pop {r0,r2,r7}
 		bal sv
         bx lr
@@ -126,13 +128,13 @@ suma:	cmp r11, #1
 		beq su_neg
 		mov r2,r3
 		add r2,r7
-		b salir
+		b g_re
 		bx lr
 		
 su_neg:	mov r5,#-1
 		mul r2,r3,r5
 		add r2,r7
-		b salir
+		b g_re
 /*----------------------------------------------------------------------- */
 
 /*-------------------------RESTA---------------------------------------------- */
@@ -140,19 +142,19 @@ resta:	cmp r11, #1
 		beq re_neg
 		mov r2,r3
 		sub r2,r7
-		b salir
+		b g_re
 		bx lr
 		
 re_neg:	mov r5,#-1
 		mul r2,r3,r5
 		sub r2,r7
-		b salir
+		b g_re
 /*----------------------------------------------------------------------- */
 
 /*--------------------------------MULT--------------------------------------- */
 
 mult:	mul r2,r3,r7
-		b salir
+		b g_re
 		bx lr
 /*----------------------------------------------------------------------- */
 
@@ -160,10 +162,37 @@ mult:	mul r2,r3,r7
 
 /*--------------------------------DIVISION--------------------------------------- */
 divi:	cmp r3,r7
-			blt salir /*RESULTADO R9, RESTO R3*/
+			blt g_div 
 		subs r3,r7
 		add r9,r9,#1
 		bal divi
-/*----------------------------------------------------------------------- */		
-salir:	pop {r0,r1,r4,r5,r6} 
-		bx lr
+/*----------------------------------------------------------------------- */	
+
+g_div:	ldr r1,=resultado
+		ldr r4,=resto
+		strb r9,[r1]
+		strb r3,[r4]
+		
+		ldrb r10,[r4]
+		b salir
+
+
+g_re:	ldr r1,=resultado
+		strb r2,[r1]
+		b salir
+
+salir:	pop {r0,r1,r4,r5,r6}
+		b despedida
+		
+		
+		
+despedida: 	push {r0,r1,r2,r4,r7}
+        	mov r7, #4      
+        	mov r0, #1      
+        	mov r2, #92   
+        	ldr r1, =mensaje_despedida
+			swi 0
+        	pop {r0,r1,r2,r4,r7}
+			mov r7, #1
+			swi 0
+
