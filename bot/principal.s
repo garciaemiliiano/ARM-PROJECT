@@ -1,5 +1,5 @@
 .data
-input_usuario: .asciz "                           "            
+input_usuario: .asciz "       "            
 mensajeDeBienvenida: .asciz "Hola, ¿Como estas?, Ingrese una operacion: "                                                                 
 mensaje_error:  .asciz "Lo siento, mis respuestas son limitadas \n"
 text_result: .asciz ""
