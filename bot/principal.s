@@ -105,7 +105,7 @@ neg:	mov r11,#1
 		
 /*---------------------------------------------------------------------------------------*/
 
-/*----------------------------RECO_SIGNO-------------------------------------------------*/		
+/*----------------------------RECONOCER SIGNO-------------------------------------------------*/		
 sign:	pop {r0,r1,r2,r4,r5,r6}  
 		mov r0,#0
 		mov r1,#0
@@ -186,7 +186,11 @@ mult:	mul r2,r3,r7  /*Realiza la operacion */
 
 
 /*--------------------------------DIVISION-----------------------------------------------*/
-divi:	cmp r3,r7
+divi:	cmp r3,#0  /*Verifico division por 0 */
+			beq error
+		cmp r7,#0
+			beq error
+		cmp r3,r7
 			blt g_div   /*Hasta que R3<R7 realiza la resta */
 		subs r3,r7
 		add r9,r9,#1
@@ -285,3 +289,8 @@ show: 	mov r7, #4
 		swi 0
 		bx lr
 
+error:	mov r7, #4      
+        mov r0, #1      
+        mov r2, #5 /*Digitos */
+        ldr r1, =mensaje_error
+		swi 0
