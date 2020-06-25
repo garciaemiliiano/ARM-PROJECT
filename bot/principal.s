@@ -1,22 +1,21 @@
 .data
-input_usuario: .asciz "               "            
+input_usuario: .asciz "               \n"            
 mensajeDeBienvenida: .asciz "Hola, ¿Como estas?, Ingrese una operacion: "                                                                 
 mensaje_error:  .asciz "Lo siento, mis respuestas son limitadas \n"
 num1: .int 0
 num2: .int 0
 resultado: .int 0
 resto: .int 0
-vacia: .asciz "##"
+vacia: .asciz "          "
 msj: .asciz "El resultado es:\n"
 mensaje_despedida: .asciz "Adios! \n"
-
 .text
 .global main
 
 /*----------------------MAIN/INPUT------------------------------------------------- */
 main:   push {r0,r1,r2,r4,r7}
-        mov r7, #4      
-        mov r0, #1      
+        mov r7, #4	     
+        mov r0, #1      /*Muestro por pantalla  un mensaje de bienvenido*/ 
         mov r2, #45 
         ldr r1, =mensajeDeBienvenida 
 		swi 0
@@ -28,13 +27,13 @@ in_us:  push {r0,r2,r7}
         mov r7, #3
         mov r0, #0
         mov r2, #10
-        ldr r1, =input_usuario
+        ldr r1, =input_usuario  /*Muestro un input */
 		swi 0
         pop {r0,r2,r7}
 		bal sv
         bx lr
 		
-/*----------------------------------------------------------------------- */
+/*---------------------------------------------------------------------------------------*/
 
 /*---------------------GUARDAR VALORES-------------------------------------------------- */		
 sv:		push {r0,r1,r2,r4,r5,r6}
@@ -99,28 +98,28 @@ p_dig:	cmp r2,#'-'
 		
 		
 neg:	mov r11,#1
-		add r1,r1,#1
+		add r1,r1,#1 /*Si el primer digito es un '-' pasa al siguiente y enciende una flag  */
 		bal loop
 		bx lr
 		
 		
-/*----------------------------------------------------------------------- */
+/*---------------------------------------------------------------------------------------*/
 
-/*----------------------------RECO_SIGNO------------------------------------------- */		
-sign:	pop {r0,r1,r2,r4,r5,r6}
+/*----------------------------RECO_SIGNO-------------------------------------------------*/		
+sign:	pop {r0,r1,r2,r4,r5,r6}  
 		mov r0,#0
 		mov r1,#0
 		push {r0,r1,r4,r5,r6}
-		ldr r1, =input_usuario
+		ldr r1, =input_usuario /*Prepara las variables para recorrer de nuevo el input */
 		bal lo_si
 		bx lr
 		
-	
+	/*Recorre de nuevo la cadena para encontrar el signo*/
 lo_si: 	ldrb r2,[r1] /*Elemento actual*/
 		cmp r2,#00 /*Comparo si termine de leer la cadena*/
 	        beq salir /*Salgo del programa*/
 		cmp r2, #'+'
-			beq suma
+			beq suma   /*Reconoce el signo y realiza la operacion*/
 		cmp r4,#0  
 	        beq pr_dig
 		cmp r2,#'-'	
@@ -129,40 +128,39 @@ lo_si: 	ldrb r2,[r1] /*Elemento actual*/
 			beq mult
 		cmp r2, #'/'
 			beq divi
-		/*Si nada de lo anterior sucede, solamente le suma a valor el ultimo digito*/
+		
 		add r1,r1,#1 /*Paso al elemento siguiente*/
 		b lo_si /*Vuelvo al loop*/
 		bx lr
 		
-			
+		/*Si el primer digito es un menos, se enciende la flag */	
 pr_dig:	add r1,r1,#1 /*Paso al elemento siguiente*/
-		mov r4,#1
+		mov r4,#1 
 		b lo_si
 		bx lr
 		
+/*---------------------------------------------------------------------------------------*/
 
-/*----------------------------------------------------------------------- */
-
-/*----------------------------SUMA------------------------------------------- */
+/*----------------------------SUMA-------------------------------------------------------*/
 suma:	cmp r11, #1
-		beq su_neg
+		beq su_neg 	/*Verifica que sea negativo */
 		mov r2,r3
-		add r2,r7
+		add r2,r7 /*Realiza la op */
 		b g_re
 		bx lr
 		
 		
-su_neg:	mov r5,#-1
+su_neg:	mov r5,#-1 /*Verifica que sea negativo */
 		mul r2,r3,r5
 		add r2,r7
 		b g_re
 		bx lr
 		
-/*----------------------------------------------------------------------- */
+/*---------------------------------------------------------------------------------------*/
 
 
-/*-------------------------RESTA---------------------------------------------- */
-resta:	cmp r11, #1
+/*-------------------------RESTA---------------------------------------------------------*/
+resta:	cmp r11, #1 /*Verifica que sea negativo */
 		beq re_neg
 		mov r2,r3
 		sub r2,r7
@@ -170,27 +168,26 @@ resta:	cmp r11, #1
 		bx lr
 		
 		
-re_neg:	mov r5,#-1
+re_neg:	mov r5,#-1 
 		mul r2,r3,r5
 		sub r2,r7
 		b g_re
 		bx lr
 	
-/*----------------------------------------------------------------------- */
+/*---------------------------------------------------------------------------------------*/
 
-/*--------------------------------MULT--------------------------------------- */
+/*--------------------------------MULT---------------------------------------------------*/
 
-mult:	mul r2,r3,r7
+mult:	mul r2,r3,r7  /*Realiza la operacion */
 		b g_re
-		bx lr
-		
-/*----------------------------------------------------------------------- */
+		bx lr		
+/*---------------------------------------------------------------------------------------*/
 
 
 
-/*--------------------------------DIVISION--------------------------------------- */
+/*--------------------------------DIVISION-----------------------------------------------*/
 divi:	cmp r3,r7
-			blt g_div 
+			blt g_div   /*Hasta que R3<R7 realiza la resta */
 		subs r3,r7
 		add r9,r9,#1
 		bal divi
@@ -199,20 +196,18 @@ divi:	cmp r3,r7
 
 g_div:	pop {r1}
 		ldr r1,=resultado
-		ldr r4,=resto
+		ldr r4,=resto    /*Se guarda la division y el resto */
 		strb r9,[r1]
 		strb r3,[r4]
-		
-		ldrb r10,[r4]
 		b salir
 		bx lr
 		
-/*----------------------------------------------------------------------- */	
+/*---------------------------------------------------------------------------------------*/
 
 g_re:	pop {r1}
 		ldr r1,=resultado
 		strb r2,[r1]
-		b salir
+		b salir  /*Se guarda el resultado */
 		bx lr
 		
 
@@ -220,11 +215,11 @@ salir:	pop {r0,r4,r5,r6}
 		mov r7,#0
 		mov r3,#0
 		mov r11,#0
-		mov r1,#0
+		mov r1,#0  		/*Vacio los registros, y solo queda con contenido R2 */
 		b ms_res
 		bx lr
 		
-/**********************MOSTRAR RESULTADO*********************/		
+/*------------------MOSTRAR RESULTADO----------------------------------------------------*/		
 ms_res:	push {r1,r3,r4,r5,r6,r7,r8,r9,r11}
 		ldr r8,=vacia /*Cargo el registro con la cadena vacia*/
 		mov r3,#10 /*Division*/
@@ -247,13 +242,13 @@ a_pos:	mul r2,r9,r2
 
 divi_s:	cmp r2,r3
 			blt conv_enteroToAscii
-		add r4,r4,#1 /*R4 =RESULTADO*/
-		subs r2,r3   /*R2= RESTO*/
+		add r4,r4,#1 /*Realizo las divisiones*/
+		subs r2,r3   
 		bal divi_s
 		bx lr
 		
 
-conv_enteroToAscii:	add r4,#0x30 
+conv_enteroToAscii:	add r4,#0x30  /*Convierte a ascii los enteros*/
 					add r2,#0x30
 					bal g_divi
 					bx lr
@@ -262,10 +257,10 @@ conv_enteroToAscii:	add r4,#0x30
 /*Ya en esta etapa en R4=2 en ASCII R2=1 EN ASCII*/
 g_divi:	cmp r10,#1
 			beq signoNeg
-		strb r4,[r8] /*Guardo el 2 en la primera posicion (?*/
+		strb r4,[r8]   /*Guardo los valores en en VACIA */
 		
-		add r8,r8,#1
-		strb r2,[r8] /*Guardo el 1 en la segunda posicion (?*/
+		add r8,r8,#1 
+		strb r2,[r8] 
 		
 		add r8,r8,#1
 		strb r11,[r8]
@@ -276,16 +271,16 @@ g_divi:	cmp r10,#1
 		
 
 signoNeg:	strb r5,[r8]
-			add r8,r8,#1
+			add r8,r8,#1   /*Si es un numero negativo, paso primero el signo */
 			mov r10,#0
 			bal g_divi
 			bx lr
 			
-/******************************************/	
-
+/*---------------------------------------------------------------------------------------*/
+/*Print final */
 show: 	mov r7, #4      
         mov r0, #1      
-        mov r2, #2 /*Digitos */
+        mov r2, #5 /*Digitos */
         ldr r1, =vacia
 		swi 0
 		bx lr
