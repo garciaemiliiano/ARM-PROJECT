@@ -1,6 +1,6 @@
 .data
 resultado: .int -19
-vacia: .asciz "    "
+vacia: .asciz "     "
 msj: .asciz "El resultado es:\n"
 .text
 .global main 
