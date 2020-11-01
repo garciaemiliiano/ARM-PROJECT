@@ -6,7 +6,7 @@ num1: .int 0
 num2: .int 0
 resultado: .int 0
 resto: .int 0
-vacia: .asciz "          "
+vacia: .asciz "           "
 msj: .asciz "El resultado es:\n"
 mensaje_despedida: .asciz "Adios! \n"
 .text
